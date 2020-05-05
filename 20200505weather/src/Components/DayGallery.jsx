@@ -10,17 +10,30 @@ class DayGallery extends Component {
   constructor(props) {
     super(props);
     this.state = { contentList: [], city: undefined };
+    this.changeCity = this.changeCity.bind(this);
   }
+
+  changeCity = (city) => {
+    console.log(city);
+    let long = Locations[city].long;
+    console.log(long);
+    let lat = Locations[city].lat;
+    this.setState({ city: city, long: long, lat: lat });
+    console.log(this.state.city);
+  };
+
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position) => {
       const long = position.coords.longitude;
       const lat = position.coords.latitude;
       fetch(
-        `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.REACT_APP_APIKEY}&lang=en&lat=${lat}&lon=${long}`
+        `https://api.weatherbit.io/v2.0/forecast/daily?key=${
+          process.env.REACT_APP_APIKEY
+        }&lang=en&lat=${this.state.lat || lat}&lon=${this.state.long || long}`
       )
         .then((response) => response.json())
         .then((response) => {
-          this.setState({ city: response.city_name });
+          let city = response.city_name;
           let results = response.data.slice(1, 6);
           let list = [];
           results.forEach((el) => {
@@ -33,9 +46,11 @@ class DayGallery extends Component {
             day.weekDay = weekDay(day.date);
             list.push(day);
           });
-          return list;
+          return { list, city };
         })
-        .then((response) => this.setState({ contentList: response }));
+        .then((response) => {
+          this.setState({ contentList: response.list, city: response.city });
+        });
     });
   }
 
@@ -49,10 +64,22 @@ class DayGallery extends Component {
         <div className="card_gallery">{cards}</div>
         <p>Or see forecast of one of these cities</p>
         <div className="button_bar">
-          <Button {...Locations.Libreville} />
-          <Button {...Locations.SanFrancisco} />
-          <Button {...Locations.Tokyo} />
-          <Button {...Locations.Montreal} />
+          <Button
+            {...Locations.Libreville}
+            onclick={() => this.changeCity("Libreville")}
+          />
+          <Button
+            {...Locations.SanFrancisco}
+            onclick={() => this.changeCity("SanFrancisco")}
+          />
+          <Button
+            {...Locations.Tokyo}
+            onclick={() => this.changeCity("Tokyo")}
+          />
+          <Button
+            {...Locations.Montreal}
+            onclick={() => this.changeCity("Montreal")}
+          />
         </div>
       </>
     );
