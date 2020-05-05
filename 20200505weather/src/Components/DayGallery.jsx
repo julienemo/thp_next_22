@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import DayCard from "./DayCard";
+import Button from "./Button";
+
+import Locations from "../Constants/Locations";
+
 import { weekDay } from "../tools";
 
 class DayGallery extends Component {
@@ -8,7 +12,6 @@ class DayGallery extends Component {
     this.state = { contentList: [], city: undefined };
   }
   componentDidMount() {
-    console.log(this.state);
     navigator.geolocation.getCurrentPosition((position) => {
       const long = position.coords.longitude;
       const lat = position.coords.latitude;
@@ -41,10 +44,17 @@ class DayGallery extends Component {
       return <DayCard {...card} key={`${card.date}_${index}`} />;
     });
     return (
-      <div className="content">
+      <>
         <p>Here is a 5-day forecast for {this.state.city}</p>
         <div className="card_gallery">{cards}</div>
-      </div>
+        <p>Or see forecast of one of these cities</p>
+        <div className="button_bar">
+          <Button {...Locations.Libreville} />
+          <Button {...Locations.SanFrancisco} />
+          <Button {...Locations.Tokyo} />
+          <Button {...Locations.Montreal} />
+        </div>
+      </>
     );
   }
 }
