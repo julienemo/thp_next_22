@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.wrap-row {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.square {
+  height: 100px;
+  width: 100px;
+  margin: 0.2em;
+  border: 0.3em rgb(167, 164, 164) solid;
+  border-radius: 0.3em;
+}
+
+.red {
+  background-color: red;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}

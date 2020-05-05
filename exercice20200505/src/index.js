@@ -1,10 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.scss";
 
-ReactDOM.render(
-  <button className="btn btn-outline-warning">hello</button>,
-  document.getElementById("root")
-);
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+
+import Color from "./components/Color";
+
+class App extends Component {
+  render() {
+    return <Color name="coucou" />;
+  }
+}
+
+ReactDOM.render(<App />, document.querySelector("#root"));
