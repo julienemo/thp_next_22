@@ -1,12 +1,51 @@
 import React, { Component } from "react";
 import DayCard from "./DayCard";
+import { weekDay } from "../tools";
 
 class DayGallery extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { contentList: [], city: undefined };
+  }
+  componentDidMount() {
+    console.log(this.state);
+    navigator.geolocation.getCurrentPosition((position) => {
+      const long = position.coords.longitude;
+      const lat = position.coords.latitude;
+      fetch(
+        `https://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.REACT_APP_APIKEY}&lang=en&lat=${lat}&lon=${long}`
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          this.setState({ city: response.city_name });
+          let results = response.data.slice(1, 6);
+          let list = [];
+          results.forEach((el) => {
+            let day = {
+              date: el.valid_date,
+              icon: el.weather.icon,
+              minTemp: el.low_temp,
+              maxTemp: el.max_temp,
+            };
+            day.weekDay = weekDay(day.date);
+            list.push(day);
+          });
+          return list;
+        })
+        .then((response) => this.setState({ contentList: response }));
+    });
+  }
+
   render() {
-    const cards = this.props.list.map((card, index) => {
+    const cards = this.state.contentList.map((card, index) => {
       return <DayCard {...card} key={`${card.date}_${index}`} />;
     });
-    return <div className="card_gallery">{cards}</div>;
+    return (
+      <div className="content">
+        <p>Here is a 5-day forecast for {this.state.city}</p>
+        <div className="card_gallery">{cards}</div>
+      </div>
+    );
   }
 }
 

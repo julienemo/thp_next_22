@@ -8,7 +8,7 @@ class DayCard extends Component {
         <p>{weekDay.toUpperCase()}</p>
         <img
           className="card_icon"
-          src={require(`assets/images/${icon}.svg`)}
+          src={require(`assets/images/${icon}.png`)}
           alt={icon}
         />
         <p>{date}</p>

@@ -18,3 +18,11 @@ On life cycle
 
 - life cycle methods don't need to be binded to 'this'
 - Parent life cycle methods are always triggered after all things are buckled up in children (ex: Parent and Child in this `exercice20200505`)
+
+---
+
+To use env var in react (eg, interpolation), the var name should be prefixed with `REACT_APP_`. To call such var. use `process.env.NAMEOFVAR`.
+
+---
+
+No using `this.setState()` in `render`
