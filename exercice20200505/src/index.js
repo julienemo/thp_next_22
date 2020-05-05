@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 
 import Color from "./components/Color";
 import Counter from "./components/Counter";
+import Parent from "./components/Parent";
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
       <>
         <Color name="coucou" />
         <Counter />
+        <Parent />
       </>
     );
   }
