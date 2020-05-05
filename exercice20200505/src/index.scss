@@ -17,6 +17,13 @@ code {
   flex-flow: row wrap;
 }
 
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
 .square {
   height: 100px;
   width: 100px;
