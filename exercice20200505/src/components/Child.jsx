@@ -9,7 +9,14 @@ class Child extends Component {
     console.log("Child is UNmounting");
   };
   render() {
-    return <p className="yellow">i'm the child</p>;
+    return (
+      <>
+        <p className="yellow">I'm the child</p>
+        <button className="btn btn-outline-info" onClick={this.props.onClick}>
+          {this.props.counter}
+        </button>
+      </>
+    );
   }
 }
 
